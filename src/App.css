@@ -34,7 +34,7 @@ section {
   padding-top: 80px;
   position: relative;
   opacity: 0;
-  transform: translateX(-100px) rotateY(-20deg);
+  transform: translateY(-50px) rotateX(20deg);
   transition: all 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   scroll-margin-top: 80px;
   perspective: 2000px;
