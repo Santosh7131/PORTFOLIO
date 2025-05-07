@@ -129,6 +129,27 @@ const Form = styled.form`
   backdrop-filter: blur(5px);
 `;
 
+const projects = [
+  {
+    title: "Project One",
+    description: "A full-stack web application built with React and Node.js",
+    tech: ["React", "Node.js", "MongoDB"],
+    link: "#"
+  },
+  {
+    title: "Project Two",
+    description: "An e-commerce platform with real-time updates",
+    tech: ["Next.js", "Firebase", "Stripe"],
+    link: "#"
+  },
+  {
+    title: "Project Three",
+    description: "A mobile-first responsive dashboard",
+    tech: ["React", "Material-UI", "Chart.js"],
+    link: "#"
+  }
+];
+
 export default function App() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [activeSection, setActiveSection] = useState('home');
