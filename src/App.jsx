@@ -24,7 +24,9 @@ const NavLinks = styled.div`
 const StyledLink = styled(Link)`
   color: #fff;
   cursor: pointer;
-  &:hover { color: #64ffda; }
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  &:hover { color: #64ffda; transform: scale(1.1); }
+  &.nav-link-active { color: #64ffda; }
 `;
 
 const Section = styled.section`
@@ -91,16 +93,67 @@ const projects = [
 
 export default function App() {
   const { register, handleSubmit, formState: { errors } } = useForm();
+  const [activeSection, setActiveSection] = useState('home');
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+          entry.target.classList.add('active');
+        } else {
+          entry.target.classList.remove('active');
+        }
+      });
+    }, {
+      threshold: 0.5,
+      root: null,
+    });
+
+    document.querySelectorAll('section').forEach(section => {
+      observer.observe(section);
+    });
+
+    return () => observer.disconnect();
+  }, []);
   const onSubmit = (data) => console.log(data);
 
   return (
     <div className="section-container">
       <Nav>
         <NavLinks>
-          <StyledLink to="home" smooth={true}>Home</StyledLink>
-          <StyledLink to="about" smooth={true}>About</StyledLink>
-          <StyledLink to="projects" smooth={true}>Projects</StyledLink>
-          <StyledLink to="contact" smooth={true}>Contact</StyledLink>
+          <StyledLink 
+            to="home" 
+            smooth={true} 
+            spy={true}
+            className={activeSection === 'home' ? 'nav-link-active' : ''}
+          >
+            Home
+          </StyledLink>
+          <StyledLink 
+            to="about" 
+            smooth={true} 
+            spy={true}
+            className={activeSection === 'about' ? 'nav-link-active' : ''}
+          >
+            About
+          </StyledLink>
+          <StyledLink 
+            to="projects" 
+            smooth={true} 
+            spy={true}
+            className={activeSection === 'projects' ? 'nav-link-active' : ''}
+          >
+            Projects
+          </StyledLink>
+          <StyledLink 
+            to="contact" 
+            smooth={true} 
+            spy={true}
+            className={activeSection === 'contact' ? 'nav-link-active' : ''}
+          >
+            Contact
+          </StyledLink>
         </NavLinks>
       </Nav>
 
