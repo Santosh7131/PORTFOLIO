@@ -197,6 +197,8 @@ export default function App() {
               to={section}
               smooth={true}
               spy={true}
+              offset={-100}
+              duration={500}
               className={activeSection === section ? 'nav-link-active' : ''}
             >
               {section}
@@ -213,7 +215,7 @@ export default function App() {
           <p className="hero-description" style={{"--index": 3}}>
             I build exceptional digital experiences that live on the internet
           </p>
-          <Link to="projects" smooth={true}>
+          <Link to="projects" smooth={true} offset={-100} duration={500}>
             <Button>View My Work</Button>
           </Link>
         </div>
