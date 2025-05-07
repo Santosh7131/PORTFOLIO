@@ -171,12 +171,17 @@ export default function App() {
         if (entry.isIntersecting) {
           setActiveSection(entry.target.id);
           entry.target.classList.add('active');
+          entry.target.style.transform = 'translateX(0) rotate(0deg)';
+          entry.target.style.opacity = '1';
         } else {
           entry.target.classList.remove('active');
+          entry.target.style.transform = 'translateX(-100px) rotate(-5deg)';
+          entry.target.style.opacity = '0';
         }
       });
     }, {
-      threshold: 0.5,
+      threshold: 0.2,
+      rootMargin: '-50px'
     });
 
     document.querySelectorAll('section').forEach(section => {

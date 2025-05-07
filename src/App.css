@@ -34,9 +34,10 @@ section {
   padding-top: 80px;
   position: relative;
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+  transform: translateX(-100px);
+  transition: all 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   scroll-margin-top: 80px;
+  perspective: 1000px;
 }
 
 section::after {
@@ -103,9 +104,10 @@ section.active .project-card {
 }
 
 .project-card {
-  transform: translateY(60px);
+  transform: translateY(100px) rotate3d(1, 0, 0, 45deg);
   opacity: 0;
-  transition: all 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+  transition: all 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transform-origin: center center;
 }
 
 section.active {
