@@ -19,5 +19,11 @@
     "react-dom": "^18.2.0",
     "typescript": "^5.2.2",
     "vite": "^5.0.0"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "react-hook-form": "^7.56.2",
+    "react-scroll": "^1.9.3"
   }
 }
