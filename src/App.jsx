@@ -207,10 +207,10 @@ export default function App() {
 
       <Section id="home" className="hero">
         <div className="hero-content">
-          <span className="greeting">Hello, I'm</span>
-          <h1>John Doe</h1>
-          <h2>Full-Stack Developer</h2>
-          <p className="hero-description">
+          <span className="greeting" style={{"--index": 0}}>Hello, I'm</span>
+          <h1 style={{"--index": 1}}>John Doe</h1>
+          <h2 style={{"--index": 2}}>Full-Stack Developer</h2>
+          <p className="hero-description" style={{"--index": 3}}>
             I build exceptional digital experiences that live on the internet
           </p>
           <Link to="projects" smooth={true}>
