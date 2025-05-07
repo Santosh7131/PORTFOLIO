@@ -171,11 +171,11 @@ export default function App() {
         if (entry.isIntersecting) {
           setActiveSection(entry.target.id);
           entry.target.classList.add('active');
-          entry.target.style.transform = 'translateY(0) rotateX(0deg)';
+          entry.target.style.transform = 'translateY(0) scale(1)';
           entry.target.style.opacity = '1';
         } else {
           entry.target.classList.remove('active');
-          entry.target.style.transform = 'translateY(-50px) rotateX(20deg)';
+          entry.target.style.transform = 'translateY(-100px) scale(0.8)';
           entry.target.style.opacity = '0';
         }
       });
