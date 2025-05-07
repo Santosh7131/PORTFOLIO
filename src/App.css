@@ -34,10 +34,12 @@ section {
   padding-top: 80px;
   position: relative;
   opacity: 0;
-  transform: translateX(-100px);
-  transition: all 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transform: translateX(-100px) rotateY(-20deg);
+  transition: all 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   scroll-margin-top: 80px;
-  perspective: 1000px;
+  perspective: 2000px;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
 }
 
 section::after {
@@ -79,8 +81,15 @@ section.active .project-card {
 
 .hero-content > * {
   opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+  transform: translateY(30px) rotate3d(1, 0, 0, 15deg);
+  transition: all 1s cubic-bezier(0.65, 0, 0.35, 1);
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.hero-content > *:hover {
+  transform: translateY(0) rotate3d(1, 0, 0, 0deg) translateZ(20px);
+  color: var(--accent);
 }
 
 .hero.active .hero-content > * {
@@ -104,10 +113,17 @@ section.active .project-card {
 }
 
 .project-card {
-  transform: translateY(100px) rotate3d(1, 0, 0, 45deg);
+  transform: perspective(1000px) translateY(100px) rotate3d(1, 1, 0, 45deg);
   opacity: 0;
-  transition: all 1s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  transition: all 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   transform-origin: center center;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+
+.project-card:hover {
+  transform: perspective(1000px) translateY(-10px) rotate3d(1, 1, 0, 0deg) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
 section.active {
