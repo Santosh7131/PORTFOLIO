@@ -94,7 +94,7 @@ export default function App() {
   const onSubmit = (data) => console.log(data);
 
   return (
-    <>
+    <div className="section-container">
       <Nav>
         <NavLinks>
           <StyledLink to="home" smooth={true}>Home</StyledLink>
@@ -182,6 +182,6 @@ export default function App() {
           <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">Twitter</a>
         </div>
       </footer>
-    </>
+    </div>
   );
 }
