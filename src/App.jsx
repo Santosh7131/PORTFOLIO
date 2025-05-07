@@ -9,91 +9,139 @@ const Nav = styled.nav`
   position: fixed;
   top: 0;
   width: 100%;
-  padding: 1rem;
-  background: rgba(18, 18, 18, 0.95);
-  backdrop-filter: blur(5px);
+  padding: 1.5rem;
+  background: rgba(10, 25, 47, 0.85);
+  backdrop-filter: blur(10px);
   z-index: 100;
+  transition: all 0.3s ease;
 `;
 
 const NavLinks = styled.div`
   display: flex;
   justify-content: center;
-  gap: 2rem;
+  gap: 3rem;
 `;
 
 const StyledLink = styled(Link)`
-  color: #fff;
+  position: relative;
+  color: var(--text-primary);
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  &:hover { color: #64ffda; transform: scale(1.1); }
-  &.nav-link-active { color: #64ffda; }
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 0.5rem;
+  
+  &:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--accent);
+    transition: width 0.3s ease;
+  }
+  
+  &:hover:after {
+    width: 100%;
+  }
 `;
 
 const Section = styled.section`
   min-height: 100vh;
-  padding: 4rem 2rem;
+  padding: 6rem 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  overflow: hidden;
 `;
 
 const Button = styled.button`
-  padding: 0.8rem 1.5rem;
+  padding: 1rem 2rem;
   background: transparent;
-  border: 1px solid #64ffda;
-  color: #64ffda;
+  border: 2px solid var(--accent);
+  color: var(--accent);
   border-radius: 4px;
+  font-weight: 600;
   cursor: pointer;
-  &:hover { background: rgba(100, 255, 218, 0.1); }
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  
+  &:before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: var(--accent);
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    transition: all 0.5s ease;
+    z-index: -1;
+  }
+  
+  &:hover {
+    color: var(--bg-primary);
+    &:before {
+      width: 200%;
+      height: 200%;
+    }
+  }
 `;
 
 const ProjectGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2.5rem;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1400px;
+  padding: 2rem;
 `;
 
 const ProjectCard = styled.div`
-  background: #1f1f1f;
-  padding: 1.5rem;
-  border-radius: 8px;
-  border: 1px solid #333;
+  background: rgba(31, 31, 31, 0.6);
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  transform: translateY(0);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 30px -15px rgba(0, 0, 0, 0.7);
+  }
 `;
 
 const Form = styled.form`
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.5rem;
   width: 100%;
-  max-width: 500px;
+  max-width: 600px;
+  background: rgba(31, 31, 31, 0.6);
+  padding: 3rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
 `;
-
-const projects = [
-  {
-    title: "Project 1",
-    description: "A full-stack web application",
-    tech: ["React", "Node.js", "MongoDB"],
-    link: "#"
-  },
-  {
-    title: "Project 2",
-    description: "Mobile-first responsive design",
-    tech: ["React", "CSS", "Firebase"],
-    link: "#"
-  },
-  {
-    title: "Project 3",
-    description: "Real-time data visualization",
-    tech: ["D3.js", "React", "WebSocket"],
-    link: "#"
-  }
-];
 
 export default function App() {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [activeSection, setActiveSection] = useState('home');
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
@@ -107,7 +155,6 @@ export default function App() {
       });
     }, {
       threshold: 0.5,
-      root: null,
     });
 
     document.querySelectorAll('section').forEach(section => {
@@ -116,65 +163,65 @@ export default function App() {
 
     return () => observer.disconnect();
   }, []);
+
   const onSubmit = (data) => console.log(data);
 
   return (
     <div className="section-container">
-      <Nav>
+      <Nav className={scrolled ? 'nav-scrolled' : ''}>
         <NavLinks>
-          <StyledLink 
-            to="home" 
-            smooth={true} 
-            spy={true}
-            className={activeSection === 'home' ? 'nav-link-active' : ''}
-          >
-            Home
-          </StyledLink>
-          <StyledLink 
-            to="about" 
-            smooth={true} 
-            spy={true}
-            className={activeSection === 'about' ? 'nav-link-active' : ''}
-          >
-            About
-          </StyledLink>
-          <StyledLink 
-            to="projects" 
-            smooth={true} 
-            spy={true}
-            className={activeSection === 'projects' ? 'nav-link-active' : ''}
-          >
-            Projects
-          </StyledLink>
-          <StyledLink 
-            to="contact" 
-            smooth={true} 
-            spy={true}
-            className={activeSection === 'contact' ? 'nav-link-active' : ''}
-          >
-            Contact
-          </StyledLink>
+          {['home', 'about', 'projects', 'contact'].map((section) => (
+            <StyledLink
+              key={section}
+              to={section}
+              smooth={true}
+              spy={true}
+              className={activeSection === section ? 'nav-link-active' : ''}
+            >
+              {section}
+            </StyledLink>
+          ))}
         </NavLinks>
       </Nav>
 
       <Section id="home" className="hero">
         <div className="hero-content">
+          <span className="greeting">Hello, I'm</span>
           <h1>John Doe</h1>
-          <p>Full-Stack Developer</p>
+          <h2>Full-Stack Developer</h2>
+          <p className="hero-description">
+            I build exceptional digital experiences that live on the internet
+          </p>
           <Link to="projects" smooth={true}>
-            <Button>View Projects</Button>
+            <Button>View My Work</Button>
           </Link>
         </div>
       </Section>
 
-      <Section id="about" className="about">
+      <Section id="about">
         <div className="about-grid">
-          <div className="profile-image">
-            <img src="https://via.placeholder.com/300" alt="Profile" />
-          </div>
-          <div className="bio">
+          <div className="profile-content">
             <h2>About Me</h2>
-            <p>I'm a passionate developer focused on creating beautiful and functional web applications. With expertise in modern web technologies, I bring ideas to life through clean code and intuitive design.</p>
+            <p>
+              I'm a passionate developer with a keen eye for creating beautiful,
+              functional, and user-centered digital experiences. With a background
+              in both design and development, I bring a unique perspective to every
+              project.
+            </p>
+            <div className="tech-stack">
+              <h3>Technologies I work with:</h3>
+              <ul className="tech-list">
+                <li>JavaScript (ES6+)</li>
+                <li>React</li>
+                <li>Node.js</li>
+                <li>Python</li>
+                <li>TypeScript</li>
+                <li>GraphQL</li>
+              </ul>
+            </div>
+          </div>
+          <div className="profile-image">
+            <img src="https://via.placeholder.com/400" alt="Profile" />
           </div>
         </div>
       </Section>
@@ -182,7 +229,8 @@ export default function App() {
       <Section id="projects">
         <ProjectGrid>
           {projects.map((project, index) => (
-            <ProjectCard key={index}>
+            <ProjectCard key={index} className="project-card">
+              <span className="project-number">0{index + 1}</span>
               <h3>{project.title}</h3>
               <p>{project.description}</p>
               <div className="tech-stack">
@@ -197,16 +245,17 @@ export default function App() {
       </Section>
 
       <Section id="contact">
-        <Form onSubmit={handleSubmit(onSubmit)}>
+        <Form onSubmit={handleSubmit(onSubmit)} className="contact-form">
           <h2>Get In Touch</h2>
           <input
             {...register("name", { required: "Name is required" })}
             placeholder="Name"
+            className="form-input"
           />
-          {errors.name && <span>{errors.name.message}</span>}
+          {errors.name && <span className="error">{errors.name.message}</span>}
           
           <input
-            {...register("email", { 
+            {...register("email", {
               required: "Email is required",
               pattern: {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -214,15 +263,17 @@ export default function App() {
               }
             })}
             placeholder="Email"
+            className="form-input"
           />
-          {errors.email && <span>{errors.email.message}</span>}
+          {errors.email && <span className="error">{errors.email.message}</span>}
           
           <textarea
             {...register("message", { required: "Message is required" })}
             placeholder="Message"
             rows={5}
+            className="form-input"
           />
-          {errors.message && <span>{errors.message.message}</span>}
+          {errors.message && <span className="error">{errors.message.message}</span>}
           
           <Button type="submit">Send Message</Button>
         </Form>
@@ -234,6 +285,7 @@ export default function App() {
           <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a>
           <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">Twitter</a>
         </div>
+        <p className="footer-text">Built with React & Emotion</p>
       </footer>
     </div>
   );
