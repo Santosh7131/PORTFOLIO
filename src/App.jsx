@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
 import { Link } from 'react-scroll';
 import { useForm } from 'react-hook-form';
