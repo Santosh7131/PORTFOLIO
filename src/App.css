@@ -26,19 +26,16 @@ body {
 }
 
 .section-container {
-  height: 100vh;
   overflow-x: hidden;
-  scroll-behavior: smooth;
 }
 
 section {
   min-height: 100vh;
-  opacity: 0;
   padding-top: 80px;
-  transform: translateY(20px);
-  transition: all 0.8s cubic-bezier(0.65, 0, 0.35, 1);
-  will-change: transform, opacity;
   position: relative;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
   scroll-margin-top: 80px;
 }
 

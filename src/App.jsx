@@ -196,12 +196,12 @@ export default function App() {
             <StyledLink
               key={section}
               to={section}
-              smooth={true}
               spy={true}
-              offset={-70}
-              duration={800}
-              activeClass="nav-link-active"
-              className={activeSection === section ? 'nav-link-active' : ''}
+              smooth={true}
+              duration={1000}
+              offset={-80}
+              ignoreCancelEvents={true}
+              className="nav-link"
             >
               {section}
             </StyledLink>
