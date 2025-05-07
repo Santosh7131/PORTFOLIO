@@ -55,6 +55,7 @@ const Section = styled.section`
   justify-content: center;
   position: relative;
   overflow: hidden;
+  scroll-margin-top: 100px;
 `;
 
 const Button = styled.button`
@@ -197,8 +198,9 @@ export default function App() {
               to={section}
               smooth={true}
               spy={true}
-              offset={-100}
-              duration={500}
+              offset={-80}
+              duration={800}
+              activeClass="nav-link-active"
               className={activeSection === section ? 'nav-link-active' : ''}
             >
               {section}
