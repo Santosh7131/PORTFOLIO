@@ -193,19 +193,20 @@ export default function App() {
       });
 
       // Projects animation
-      gsap.from(".project-card", {
-        scrollTrigger: {
-          trigger: projectsRef.current,
-          start: "top center",
-          end: "bottom bottom",
-          toggleActions: "play none none reverse"
-        },
-        y: 100,
-        opacity: 0,
-        scale: 0.8,
-        duration: 0.8,
-        stagger: 0.2,
-        ease: "power3.out"
+      gsap.utils.toArray('.project-card').forEach((card, i) => {
+        gsap.from(card, {
+          scrollTrigger: {
+            trigger: card,
+            start: "top bottom",
+            toggleActions: "play none none reverse"
+          },
+          y: 100,
+          opacity: 0,
+          scale: 0.8,
+          duration: 0.8,
+          delay: i * 0.2,
+          ease: "power3.out"
+        });
       });
 
       // Section transitions

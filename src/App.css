@@ -51,7 +51,6 @@ section::after {
 }
 
 section > * {
-  opacity: 0;
   transform: translateY(30px);
   transition: all 0.8s cubic-bezier(0.65, 0, 0.35, 1);
 }
