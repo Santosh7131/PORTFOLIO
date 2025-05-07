@@ -26,21 +26,20 @@ body {
 }
 
 .section-container {
-  scroll-snap-type: y proximity;
-  overflow-y: scroll;
   height: 100vh;
-  perspective: 1px;
-  transform-style: preserve-3d;
+  overflow-x: hidden;
   scroll-behavior: smooth;
 }
 
 section {
+  min-height: 100vh;
   opacity: 0;
-  transform: translateY(100px) translateZ(0);
-  transition: all 1.2s cubic-bezier(0.65, 0, 0.35, 1);
+  padding-top: 80px;
+  transform: translateY(20px);
+  transition: all 0.8s cubic-bezier(0.65, 0, 0.35, 1);
   will-change: transform, opacity;
-  overflow: hidden;
   position: relative;
+  scroll-margin-top: 80px;
 }
 
 section::after {

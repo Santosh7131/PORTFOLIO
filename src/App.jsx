@@ -198,7 +198,7 @@ export default function App() {
               to={section}
               smooth={true}
               spy={true}
-              offset={-80}
+              offset={-70}
               duration={800}
               activeClass="nav-link-active"
               className={activeSection === section ? 'nav-link-active' : ''}
