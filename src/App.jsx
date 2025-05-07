@@ -250,7 +250,11 @@ export default function App() {
       <Section id="projects">
         <ProjectGrid>
           {projects.map((project, index) => (
-            <ProjectCard key={index} className="project-card">
+            <ProjectCard 
+              key={index} 
+              className="project-card"
+              style={{"--card-index": index}}
+            >
               <span className="project-number">0{index + 1}</span>
               <h3>{project.title}</h3>
               <p>{project.description}</p>
