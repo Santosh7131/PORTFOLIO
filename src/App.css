@@ -33,14 +33,10 @@ section {
   min-height: 100vh;
   padding-top: 80px;
   position: relative;
-  opacity: 0;
-  transform: translateY(-100px) scale(0.8);
-  transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1);
   scroll-margin-top: 80px;
   transform-style: preserve-3d;
-  transform-origin: center top;
-  backface-visibility: hidden;
-  will-change: transform, opacity;
+  will-change: transform;
+  overflow: hidden;
 }
 
 section::after {

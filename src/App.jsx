@@ -1,5 +1,9 @@
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+gsap.registerPlugin(ScrollTrigger);
 import styled from '@emotion/styled';
 import { Link } from 'react-scroll';
 import { useForm } from 'react-hook-form';
@@ -165,30 +169,57 @@ export default function App() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const heroRef = useRef(null);
+  const projectsRef = useRef(null);
+
   useEffect(() => {
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.id);
-          entry.target.classList.add('active');
-          entry.target.style.transform = 'translateY(0) scale(1)';
-          entry.target.style.opacity = '1';
-        } else {
-          entry.target.classList.remove('active');
-          entry.target.style.transform = 'translateY(-100px) scale(0.8)';
-          entry.target.style.opacity = '0';
-        }
+    const ctx = gsap.context(() => {
+      // Hero animation
+      gsap.from(".hero-content > *", {
+        y: 100,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.2,
+        ease: "power3.out"
       });
-    }, {
-      threshold: 0.2,
-      rootMargin: '-50px'
+
+      // Pin hero section
+      ScrollTrigger.create({
+        trigger: heroRef.current,
+        start: "top top",
+        end: "bottom top",
+        pin: true,
+        pinSpacing: false,
+      });
+
+      // Projects animation
+      gsap.from(".project-card", {
+        scrollTrigger: {
+          trigger: projectsRef.current,
+          start: "top center",
+          end: "bottom bottom",
+          toggleActions: "play none none reverse"
+        },
+        y: 100,
+        opacity: 0,
+        scale: 0.8,
+        duration: 0.8,
+        stagger: 0.2,
+        ease: "power3.out"
+      });
+
+      // Section transitions
+      document.querySelectorAll('section').forEach(section => {
+        ScrollTrigger.create({
+          trigger: section,
+          start: "top center",
+          onEnter: () => setActiveSection(section.id),
+          onEnterBack: () => setActiveSection(section.id)
+        });
+      });
     });
 
-    document.querySelectorAll('section').forEach(section => {
-      observer.observe(section);
-    });
-
-    return () => observer.disconnect();
+    return () => ctx.revert();
   }, []);
 
   const onSubmit = (data) => console.log(data);
@@ -214,7 +245,7 @@ export default function App() {
         </NavLinks>
       </Nav>
 
-      <Section id="home" className="hero">
+      <Section id="home" className="hero" ref={heroRef}>
         <div className="hero-content">
           <span className="greeting" style={{"--index": 0}}>Hello, I'm</span>
           <h1 style={{"--index": 1}}>John Doe</h1>
@@ -256,7 +287,7 @@ export default function App() {
         </div>
       </Section>
 
-      <Section id="projects">
+      <Section id="projects" ref={projectsRef}>
         <ProjectGrid>
           {projects.map((project, index) => (
             <ProjectCard 
