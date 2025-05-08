@@ -1,9 +1,4 @@
-
 import { useState, useEffect, useRef } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
 import styled from '@emotion/styled';
 import { Link } from 'react-scroll';
 import { useForm } from 'react-hook-form';
@@ -136,23 +131,32 @@ const Form = styled.form`
 
 const projects = [
   {
-    title: "Project One",
-    description: "A full-stack web application built with React and Node.js",
+    title: "SRM Lift Optimization",
+    description: "This project optimizes lift allocation in buildings by using a zone-based, greedy algorithm that assigns passengers to three lifts based on their destination floors and lift capacities. The system manages a single queue efficiently, ensuring constant travel time between floors while prioritizing passengers who have been waiting the longest.",
     tech: ["React", "Node.js", "MongoDB"],
     link: "#"
   },
   {
-    title: "Project Two",
-    description: "An e-commerce platform with real-time updates",
-    tech: ["Next.js", "Firebase", "Stripe"],
-    link: "#"
+    title: "Sentiment Analysis",
+    description: "This sentiment analysis app demonstrates DAA concepts using a hash table for fast word counting, quicksort for keyword ranking, and a weighted scoring algorithm for sentiment calculation. Efficient and real-world ready, it showcases core algorithmic techniques.",
+    tech: ["TypeScript", "React", "Algorithms"],
+    link: "https://sentiment-analysis-ten-iota.vercel.app"
   },
   {
-    title: "Project Three",
-    description: "A mobile-first responsive dashboard",
-    tech: ["React", "Material-UI", "Chart.js"],
-    link: "#"
+    title: "Random DSA Problems",
+    description: "This repository is dedicated to solving a variety of random Design and Analysis of Algorithms (DAA) problems that I encounter. It serves as a collection of solutions and approaches for classic and challenging DSA questions, helping me strengthen my problem-solving and algorithmic skills.",
+    tech: ["C", "Algorithms", "DAA"],
+    link: "https://github.com/Santosh7131/DAA-C"
   }
+];
+
+const technologies = [
+  "JavaScript",
+  "HTML",
+  "CSS",
+  "Python",
+  "React",
+  "Node.js"
 ];
 
 export default function App() {
@@ -167,60 +171,6 @@ export default function App() {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const heroRef = useRef(null);
-  const projectsRef = useRef(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Hero animation
-      gsap.from(".hero-content > *", {
-        y: 100,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.2,
-        ease: "power3.out"
-      });
-
-      // Pin hero section
-      ScrollTrigger.create({
-        trigger: heroRef.current,
-        start: "top top",
-        end: "bottom top",
-        pin: true,
-        pinSpacing: false,
-      });
-
-      // Projects animation
-      gsap.utils.toArray('.project-card').forEach((card, i) => {
-        gsap.from(card, {
-          scrollTrigger: {
-            trigger: card,
-            start: "top bottom",
-            toggleActions: "play none none reverse"
-          },
-          y: 100,
-          opacity: 0,
-          scale: 0.8,
-          duration: 0.8,
-          delay: i * 0.2,
-          ease: "power3.out"
-        });
-      });
-
-      // Section transitions
-      document.querySelectorAll('section').forEach(section => {
-        ScrollTrigger.create({
-          trigger: section,
-          start: "top center",
-          onEnter: () => setActiveSection(section.id),
-          onEnterBack: () => setActiveSection(section.id)
-        });
-      });
-    });
-
-    return () => ctx.revert();
   }, []);
 
   const onSubmit = (data) => console.log(data);
@@ -246,13 +196,13 @@ export default function App() {
         </NavLinks>
       </Nav>
 
-      <Section id="home" className="hero" ref={heroRef}>
+      <Section id="home" className="hero">
         <div className="hero-content">
-          <span className="greeting" style={{"--index": 0}}>Hello, I'm</span>
-          <h1 style={{"--index": 1}}>John Doe</h1>
-          <h2 style={{"--index": 2}}>Full-Stack Developer</h2>
-          <p className="hero-description" style={{"--index": 3}}>
-            I build exceptional digital experiences that live on the internet
+          <span className="greeting">Hello, I'm</span>
+          <h1>Santosh Kumaar</h1>
+          <h2>Web Developer</h2>
+          <p className="hero-description">
+            Turning data into meaningful insights and impactful web experiences.
           </p>
           <Link to="projects" smooth={true} offset={-100} duration={500}>
             <Button>View My Work</Button>
@@ -262,6 +212,9 @@ export default function App() {
 
       <Section id="about">
         <div className="about-grid">
+          <div className="profile-image">
+            <img src="https://via.placeholder.com/400" alt="Profile" />
+          </div>
           <div className="profile-content">
             <h2>About Me</h2>
             <p>
@@ -273,84 +226,65 @@ export default function App() {
             <div className="tech-stack">
               <h3>Technologies I work with:</h3>
               <ul className="tech-list">
-                <li>JavaScript (ES6+)</li>
-                <li>React</li>
-                <li>Node.js</li>
-                <li>Python</li>
-                <li>TypeScript</li>
-                <li>GraphQL</li>
+                {technologies.map((tech) => (
+                  <li key={tech}>{tech}</li>
+                ))}
               </ul>
             </div>
-          </div>
-          <div className="profile-image">
-            <img src="https://via.placeholder.com/400" alt="Profile" />
           </div>
         </div>
       </Section>
 
-      <Section id="projects" ref={projectsRef}>
+      <Section id="projects">
         <ProjectGrid>
           {projects.map((project, index) => (
             <ProjectCard 
               key={index} 
               className="project-card"
-              style={{"--card-index": index}}
             >
               <span className="project-number">0{index + 1}</span>
               <h3>{project.title}</h3>
-              <p>{project.description}</p>
+              <p style={{ whiteSpace: 'pre-line' }}>{project.description}</p>
               <div className="tech-stack">
                 {project.tech.map(tech => (
                   <span key={tech} className="tech-badge">{tech}</span>
                 ))}
               </div>
-              <Button as="a" href={project.link}>View Project</Button>
+              {project.link && project.link !== "#" && (
+                <div style={{ marginTop: '1.5rem' }}>
+                  <Button as="a" href={project.link} target="_blank" rel="noopener noreferrer">View Project</Button>
+                </div>
+              )}
             </ProjectCard>
           ))}
         </ProjectGrid>
       </Section>
 
       <Section id="contact">
-        <Form onSubmit={handleSubmit(onSubmit)} className="contact-form">
-          <h2>Get In Touch</h2>
-          <input
-            {...register("name", { required: "Name is required" })}
-            placeholder="Name"
-            className="form-input"
-          />
-          {errors.name && <span className="error">{errors.name.message}</span>}
-          
-          <input
-            {...register("email", {
-              required: "Email is required",
-              pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                message: "Invalid email address"
-              }
-            })}
-            placeholder="Email"
-            className="form-input"
-          />
-          {errors.email && <span className="error">{errors.email.message}</span>}
-          
-          <textarea
-            {...register("message", { required: "Message is required" })}
-            placeholder="Message"
-            rows={5}
-            className="form-input"
-          />
-          {errors.message && <span className="error">{errors.message.message}</span>}
-          
-          <Button type="submit">Send Message</Button>
-        </Form>
+        <div className="coding-links">
+          <h2>My Coding Profiles</h2>
+          <div className="coding-links-table">
+            <div className="coding-links-row">
+              <div className="coding-links-cell coding-links-label">LeetCode</div>
+              <div className="coding-links-cell"><a href="https://leetcode.com/u/SANDY_7131/" target="_blank" rel="noopener noreferrer">leetcode.com/u/SANDY_7131/</a></div>
+            </div>
+            <div className="coding-links-row">
+              <div className="coding-links-cell coding-links-label">HackerRank</div>
+              <div className="coding-links-cell"><a href="https://www.hackerrank.com/profile/sk5160" target="_blank" rel="noopener noreferrer">hackerrank.com/profile/sk5160</a></div>
+            </div>
+            <div className="coding-links-row">
+              <div className="coding-links-cell coding-links-label">GitHub</div>
+              <div className="coding-links-cell"><a href="https://github.com/Santosh7131" target="_blank" rel="noopener noreferrer">github.com/Santosh7131</a></div>
+            </div>
+            <div className="coding-links-row">
+              <div className="coding-links-cell coding-links-label">DSA</div>
+              <div className="coding-links-cell"><a href="https://github.com/Santosh7131/DAA-C" target="_blank" rel="noopener noreferrer">github.com/Santosh7131/DAA-C</a></div>
+            </div>
+          </div>
+        </div>
       </Section>
 
       <footer>
-        <div className="social-links">
-          <a href="https://github.com" target="_blank" rel="noopener noreferrer">GitHub</a>
-          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">Twitter</a>
-        </div>
         <p className="footer-text">Built with React & Emotion</p>
       </footer>
     </div>
