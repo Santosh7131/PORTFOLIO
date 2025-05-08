@@ -179,10 +179,15 @@ export default function App() {
     <div className="section-container">
       <Nav className={scrolled ? 'nav-scrolled' : ''}>
         <NavLinks>
-          {['home', 'about', 'projects', 'contact'].map((section) => (
+          {[
+            { id: 'home', label: 'Santosh' },
+            { id: 'about', label: 'About Me' },
+            { id: 'projects', label: 'Projects' },
+            { id: 'contact', label: 'Links' }
+          ].map((section) => (
             <StyledLink
-              key={section}
-              to={section}
+              key={section.id}
+              to={section.id}
               spy={true}
               smooth={true}
               duration={1000}
@@ -190,7 +195,7 @@ export default function App() {
               ignoreCancelEvents={true}
               className="nav-link"
             >
-              {section}
+              {section.label}
             </StyledLink>
           ))}
         </NavLinks>
@@ -236,6 +241,18 @@ export default function App() {
       </Section>
 
       <Section id="projects">
+        <h2
+          style={{
+            color: "var(--accent)",
+            fontWeight: 700,
+            fontSize: "2.2rem",
+            marginBottom: "2rem",
+            textAlign: "center",
+            width: "100%",
+          }}
+        >
+          Check out my projects
+        </h2>
         <ProjectGrid>
           {projects.map((project, index) => (
             <ProjectCard 
@@ -280,12 +297,19 @@ export default function App() {
               <div className="coding-links-cell coding-links-label">DSA</div>
               <div className="coding-links-cell"><a href="https://github.com/Santosh7131/DAA-C" target="_blank" rel="noopener noreferrer">github.com/Santosh7131/DAA-C</a></div>
             </div>
+            <div className="coding-links-row">
+              <div className="coding-links-cell coding-links-label">Hot Questions</div>
+              <div className="coding-links-cell"><a href="https://drive.google.com/file/d/134s5zYK6i3PA1_vyWvUUhLqMqQu-KoPa/view?usp=sharing" target="_blank" rel="noopener noreferrer">drive.google.com/file/d/134s5zYK6i3PA1_vyWvUUhLqMqQu-KoPa</a></div>
+            </div>
           </div>
         </div>
       </Section>
 
       <footer>
-        <p className="footer-text">Built with React & Emotion</p>
+        <p className="footer-text">
+          Contact: +91 9790948050<br />
+          Email: <a href="mailto:sk5160@srmist.edu.in" style={{ color: 'inherit', textDecoration: 'underline' }}>sk5160@srmist.edu.in</a>
+        </p>
       </footer>
     </div>
   );
